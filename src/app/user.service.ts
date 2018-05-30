@@ -27,6 +27,13 @@ export class UserService {
     );
   }
 
+  addNewUser(user : User) : Observable<User> {
+    return this.http.post<User>(this.userUrl, user, httpOptions).pipe(
+      tap((user: User) => this.log(`added hero w/ id=${user.id}`)),
+      catchError(this.handleError<User>('addNewUser'))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
