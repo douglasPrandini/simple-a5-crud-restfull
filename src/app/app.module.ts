@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { UserFormComponent } from './user-form/user-form.component';
@@ -9,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,7 +25,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { User } from '../user';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-user',
@@ -9,35 +10,22 @@ import { User } from '../user';
   styleUrls: ['./create-user.component.css']
 })
 export class CreateUserComponent implements OnInit {
-  userFormGroup: FormGroup;
-  isSubmitted: boolean = false;
-  result: any = null;
-  
-  constructor(private frmBuilder: FormBuilder) { }
+  public formGroup;
+    
+  constructor(private readonly httpClient: HttpClient) {  }
+
+  valuesubmited:string="";
 
   ngOnInit() {
-    this.userFormGroup = this.frmBuilder.group({
-      email:["", [Validators.required]],
-    });
   }
 
+  public onSubmit(ngForm:NgForm): void {
+    if (ngForm.valid) {
+      console.log(ngForm.value);
+      console.log("Form Submitted!");
 
-  save(){
-    this.isSubmitted = true;
-    if(!this.userFormGroup.valid)
-        return;
-        
-    this.result = this.userFormGroup.value;
-     setTimeout(()=> {
-      this.result = null;
-      this.reset();
-     }, 2000);
-  }
-  
-  reset(){
-    this.isSubmitted = false;
-    this.userFormGroup.reset();
-    
+      ngForm.reset();
+    }
   }
 
 }

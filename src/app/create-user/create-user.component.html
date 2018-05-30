@@ -1,2 +1,25 @@
 
-<app-user-form></app-user-form>
+<div class="panel panel-primary">
+  <div class="panel-body">
+    
+    <form #regForm='ngForm' (ngSubmit)="onSubmit(regForm)">
+
+      <div class="form-group">
+        <label class="col-md-4 col-lg-12">First Name</label>
+        <input type="text" class="form-control" name="firstName" id="firstName" required ngModel #firstName="ngModel"/>
+        <span class="help-bpx" *ngIf="firstName.touched && !firstName.valid ">Please enter the First Name Value</span> 
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-lg-12">Last Name</label>
+        <input type="text" class="form-control" name="lastName" required ngModel/>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">
+          Save
+        </button>  
+      </div>      
+    </form>
+
+  </div>
+</div>
