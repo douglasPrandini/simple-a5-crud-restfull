@@ -8,19 +8,22 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './user';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders(
+    { 'Content-Type': 'application/json' }
+  )
 };
 
 @Injectable()
 export class UserService {
 
-  //private users : User[];
+  //URL Web api
+  private userUrl = 'http://localhost:3000/users';
 
-  private userUrl = 'api/users';
   constructor(private http: HttpClient) { }
 
   //Mock Metods, need to be refactor when get new values;
   getUsers(): Observable<User[]> {
+    console.log(this.userUrl);
     return this.http.get<User[]>(this.userUrl)
     .pipe(
       tap(users => {
@@ -39,15 +42,20 @@ export class UserService {
   }
 
   addNewUser(user : User) : Observable<User> {
-    //'user' it's supposed to work, converted to json just to test
-    let body = JSON.parse(JSON.stringify(user));
-    return this.http.post<User>(this.userUrl, body, httpOptions).pipe(
-      tap((user: User) => {
-        this.log(`added hero w/ id=${user.id}`)
-      }),
-        catchError(this.handleError<User>('addNewUser'))
+    let userJson = JSON.stringify(user);
+    console.log(userJson);
+
+    return this.http.post<User>(this.userUrl, userJson, httpOptions).pipe(
+      tap((user: User) => this.log(`added user w/ id=${user.id}`)),
+      catchError(this.handleError<User>('addUser'))
     );
   }
+
+  // addNewUser(user : User) : void {
+  //   console.log(user);
+  //   this.http.post(this.userUrl, user, httpOptions);
+  //   return;      
+  // }
 
   updateUser (user:User): Observable<any> {
     return this.http.put(this.userUrl, user, httpOptions).pipe(

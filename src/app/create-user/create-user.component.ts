@@ -30,7 +30,10 @@ export class CreateUserComponent implements OnInit {
   }
 
   private add(user:User){
-    this.userService.addNewUser(this.user);
+    this.userService.addNewUser(this.user).subscribe(
+      response => console.log(response),
+      err => console.log(err)
+    );
   }
 
 }
