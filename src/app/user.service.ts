@@ -15,22 +15,44 @@ const httpOptions = {
 @Injectable()
 export class UserService {
 
-  private userUrl = 'api/users';
+  //private users : User[];
 
+  private userUrl = 'api/users';
   constructor(private http: HttpClient) { }
 
+  //Mock Metods, need to be refactor when get new values;
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl)
     .pipe(
-      tap(users => this.log(`fetched users`)),
+      tap(users => {
+        this.log(`fetched users`);
+        //users = users.concat(this.users);
+      }),
       catchError(this.handleError('getUsers', []))
     );
   }
 
+  getUser(id: number): Observable<User> {
+    const url = `${this.userUrl}/${id}`;
+    return this.http.get<User>(url).pipe(
+      tap(_ => this.log(`fetched user id=${id}`)),
+      catchError(this.handleError<User>(`getUSer id=${id}`))
+    );
+  }
+
   addNewUser(user : User) : Observable<User> {
-    return this.http.post<User>(this.userUrl, user, httpOptions).pipe(
-      tap((user: User) => this.log(`added hero w/ id=${user.id}`)),
-      catchError(this.handleError<User>('addNewUser'))
+    let body = JSON.parse(JSON.stringify(user));
+    
+    console.log('body');
+    console.log(body);
+    console.log('user');
+    console.log(user);
+
+    return this.http.post<User>(this.userUrl, body as User, httpOptions).pipe(
+      tap((user: User) => {
+        this.log(`added hero w/ id=${user.id}`)
+      }),
+        catchError(this.handleError<User>('addNewUser'))
     );
   }
 
@@ -55,6 +77,7 @@ export class UserService {
   } 
   private log(message: string) {
     //TODO log, send msg to service log;
+    console.log(message);
   }
 
 }

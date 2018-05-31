@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { User } from '../user';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-create-user',
@@ -11,8 +12,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CreateUserComponent implements OnInit {
   public formGroup;
+  user = new User();
     
-  constructor(private readonly httpClient: HttpClient) {  }
+  constructor(private readonly httpClient: HttpClient,
+              private userService: UserService) {  }
 
   valuesubmited:string="";
 
@@ -21,11 +24,14 @@ export class CreateUserComponent implements OnInit {
 
   public onSubmit(ngForm:NgForm): void {
     if (ngForm.valid) {
-      console.log(ngForm.value);
-      console.log("Form Submitted!");
-
+      this.add(this.user);
       ngForm.reset();
     }
+  }
+
+  private add(user:User){
+    user.id = 0;
+    this.userService.addNewUser(this.user);
   }
 
 }
