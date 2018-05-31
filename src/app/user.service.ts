@@ -7,7 +7,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from './user';
 
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -26,7 +25,6 @@ export class UserService {
     .pipe(
       tap(users => {
         this.log(`fetched users`);
-        //users = users.concat(this.users);
       }),
       catchError(this.handleError('getUsers', []))
     );
@@ -41,14 +39,9 @@ export class UserService {
   }
 
   addNewUser(user : User) : Observable<User> {
+    //'user' it's supposed to work, converted to json just to test
     let body = JSON.parse(JSON.stringify(user));
-    
-    console.log('body');
-    console.log(body);
-    console.log('user');
-    console.log(user);
-
-    return this.http.post<User>(this.userUrl, body as User, httpOptions).pipe(
+    return this.http.post<User>(this.userUrl, body, httpOptions).pipe(
       tap((user: User) => {
         this.log(`added hero w/ id=${user.id}`)
       }),
@@ -56,6 +49,23 @@ export class UserService {
     );
   }
 
+  updateUser (user:User): Observable<any> {
+    return this.http.put(this.userUrl, user, httpOptions).pipe(
+      tap(_ => this.log(`updated user id=${user.id}`)),
+      catchError(this.handleError<any>('updateUSer'))
+    );
+  }
+
+  deleteHero (user: User | number): Observable<User> {
+    const id = typeof user === 'number' ? user : user.id;
+    const url = `${this.userUrl}/${id}`;
+
+    return this.http.delete<User>(url, httpOptions).pipe(
+      tap(_ => this.log(`deleted user id=${id}`)),
+      catchError(this.handleError<User>('deleteUSer'))
+    );
+  }
+  
   /**
    * Handle Http operation that failed.
    * Let the app continue.

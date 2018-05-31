@@ -25,12 +25,11 @@ export class CreateUserComponent implements OnInit {
   public onSubmit(ngForm:NgForm): void {
     if (ngForm.valid) {
       this.add(this.user);
-      ngForm.reset();
+      //ngForm.reset();
     }
   }
 
   private add(user:User){
-    user.id = 0;
     this.userService.addNewUser(this.user);
   }
 
