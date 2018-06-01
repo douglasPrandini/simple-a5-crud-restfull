@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 10,
+      "firstName": "Name1",
+      "lastName": "last1",
+      "email": "name1@liferay.com"
+    },
+    {
+      "firstName": "Firstname",
+      "lastName": "lastname",
+      "email": "test6@email.com",
+      "id": 11
+    },
+    {
+      "firstName": "Firstname",
+      "lastName": "lastname",
+      "email": "test6@email.com",
+      "id": 12
+    }
+  ]
+}
