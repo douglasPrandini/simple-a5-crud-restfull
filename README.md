@@ -13,8 +13,7 @@ on folder `src/json-server` run:
 1 - `npm install`
 2 - `json-server --watch db.json`
 
-to more info access 
-`https://github.com/typicode/json-server`
+to more info access: [json-server](https://github.com/typicode/json-server).
 
 ## Code scaffolding
 
