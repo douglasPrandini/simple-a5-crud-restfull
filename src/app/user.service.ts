@@ -16,8 +16,11 @@ const httpOptions = {
 @Injectable()
 export class UserService {
 
-  //URL Web api
-  private userUrl = 'http://localhost:3000/users';
+  //URL Web api json-server
+  //private userUrl = 'http://localhost:3000/users';
+  
+  //url in memory web api
+  private userUrl = 'api/users';
 
   constructor(private http: HttpClient) { }
 
@@ -42,35 +45,31 @@ export class UserService {
   }
 
   addNewUser(user : User) : Observable<User> {
-    let userJson = JSON.stringify(user);
-    console.log(userJson);
+    //let userJson = JSON.stringify(user);
+    //console.log(userJson);
 
-    return this.http.post<User>(this.userUrl, userJson, httpOptions).pipe(
+    return this.http.post<User>(this.userUrl, user, httpOptions).pipe(
       tap((user: User) => this.log(`added user w/ id=${user.id}`)),
       catchError(this.handleError<User>('addUser'))
     );
   }
 
-  // addNewUser(user : User) : void {
-  //   console.log(user);
-  //   this.http.post(this.userUrl, user, httpOptions);
-  //   return;      
-  // }
+  updateUser (user: User): Observable<any> {
+    const url = `${this.userUrl}/${user.id}`;
 
-  updateUser (user:User): Observable<any> {
-    return this.http.put(this.userUrl, user, httpOptions).pipe(
+    return this.http.put(url, user, httpOptions).pipe(
       tap(_ => this.log(`updated user id=${user.id}`)),
-      catchError(this.handleError<any>('updateUSer'))
+      catchError(this.handleError<any>('updateUser'))
     );
   }
 
-  deleteHero (user: User | number): Observable<User> {
+  deleteUser (user: User | number): Observable<User> {
     const id = typeof user === 'number' ? user : user.id;
     const url = `${this.userUrl}/${id}`;
 
     return this.http.delete<User>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted user id=${id}`)),
-      catchError(this.handleError<User>('deleteUSer'))
+      catchError(this.handleError<User>('deleteUser'))
     );
   }
   

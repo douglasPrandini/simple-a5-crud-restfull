@@ -3,30 +3,31 @@
   <div class="panel-body">
     
     <form #regForm='ngForm' (ngSubmit)="onSubmit(regForm)">
-
-      <input type="hidden" name="id" [(ngModel)]="user.id" />
-
-      <div class="form-group">
-        <label class="col-md-4 col-lg-12">First Name</label>
-        <input type="text" class="form-control"  [(ngModel)]="user.firstName" name="firstName" id="firstName" required ngModel #firstName="ngModel"/>
-        <span class="help-bpx" *ngIf="firstName.touched && !firstName.valid ">Please enter the First Name Value</span>
-      </div>
-
-      <div class="form-group">
-        <label class="col-md-4 col-lg-12">Last Name</label>
-        <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" required ngModel/>
-      </div>
-
-      <div class="form-group">
-          <label class="col-md-4 col-lg-12">E-mail</label>
-          <input type="text" class="form-control" [(ngModel)]="user.email" name="email" required ngModel/>
+      
+      <div class="row col-6">
+        <div class="form-group col-lg-12">
+          <label class="">First Name</label>
+          <input type="text" class="form-control"  [(ngModel)]="user.firstName" name="firstName" id="firstName" required ngModel #firstName="ngModel"/>
+          <span class="help-bpx" *ngIf="firstName.touched && !firstName.valid ">Please enter the First Name Value</span>
         </div>
 
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">
-          Save
-        </button>
+        <div class="form-group col-lg-12">
+          <label class="">Last Name</label>
+          <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" required ngModel/>
+        </div>
+
+        <div class="form-group col-lg-12">
+            <label class="">E-mail</label>
+            <input type="text" class="form-control" [(ngModel)]="user.email" name="email" required ngModel/>
+          </div>
       </div>
+
+      <div class="row form-group">
+          <button type="submit" class="btn btn-primary">
+            Save
+          </button>
+        </div>
+
     </form>
 
   </div>

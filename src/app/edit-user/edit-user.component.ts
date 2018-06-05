@@ -17,7 +17,10 @@ export class EditUserComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private readonly httpClient: HttpClient,
-    private userService: UserService) {  }
+    private userService: UserService) {
+      //because it is async, the obj need to be initialized
+      this.user = new User();
+    }
 
   ngOnInit() {
     this.getUser();
@@ -26,10 +29,15 @@ export class EditUserComponent implements OnInit {
   getUser(): void{
     const id = +this.route.snapshot.paramMap.get('id');
     this.userService.getUser(id)
-      .subscribe(user => {this.user = user});
+      .subscribe(user => { this.user = user; console.log(user); });
+
+      console.log(this.user);
   }
 
-  save(): void {
+  save(form): void {
+    console.log(this.user);
+    console.log(form);
+
     this.userService.updateUser(this.user)
       .subscribe(() => this.location.back());
   }

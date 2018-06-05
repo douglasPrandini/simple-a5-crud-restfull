@@ -13,6 +13,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { FormsModule } from '@angular/forms';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { UserService } from './user.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
 
 
 @NgModule({
@@ -27,10 +29,10 @@ import { UserService } from './user.service';
     FormsModule,
     HttpModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
     
-    //remove when change for a real api
-    //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false })
+    //remove when change for a real api or if you use json-server
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false })
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
